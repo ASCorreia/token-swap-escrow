@@ -20,7 +20,7 @@ pub struct Escrow {
 }
 ```
 
-By storing `seed` and `bump`, we can verify that we are actually "acessing" the correct escrow account.
+By storing `seed` and `bump`, we can verify that we are actually "accessing" the correct escrow account.
 We store the Pubkey of `mint_x` and `mint_y` to later verify that both the tokens that are being deposited and withdraw are the correct ones.
 The value `amount` is used to store the amount of tokens from `mint_y` requested by out "maker"
 
@@ -48,7 +48,7 @@ pub struct Make<'info> {
     pub escrow: Account<'info, Escrow>,
 ```
 
-We also pass the the address of the mints involved in the swap, in order to verify / initialize the `maker` associated token accounts used to perform the escrow swap 
+We also pass the address of the mints involved in the swap, in order to verify / initialize the `maker` associated token accounts used to perform the escrow swap 
 
 ```rust
     pub mint_x: InterfaceAccount<'info, Mint>,
