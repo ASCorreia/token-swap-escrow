@@ -107,6 +107,7 @@ impl<'info> Take<'info> {
     }
 
     pub fn close(&mut self) -> Result<()> {
+        // Create signer seeds
         let signer_seeds: [&[&[u8]];1] = [
             &[
                 b"escrow", 
@@ -116,16 +117,17 @@ impl<'info> Take<'info> {
             ]
         ];
 
+        // Create CPI accounts
         let cpi_accounts = CloseAccount {
             account: self.vault.to_account_info(),
             destination: self.maker.to_account_info(),
             authority: self.escrow.to_account_info(),
         };
-
+        // Fetch CPI program
         let cpi_program = self.token_program.to_account_info();
-
+        // Create CPI context
         let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, &signer_seeds);
-
+        // Close vault
         close_account(cpi_ctx)
     }
 }

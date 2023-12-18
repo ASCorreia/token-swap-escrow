@@ -8,8 +8,6 @@ use crate::state::Escrow;
 pub struct Make<'info> {
     #[account(mut)]
     pub maker: Signer<'info>,
-    pub mint_x: InterfaceAccount<'info, Mint>,
-    pub mint_y: InterfaceAccount<'info, Mint>,
     #[account(
         init,
         payer = maker,
@@ -18,6 +16,8 @@ pub struct Make<'info> {
         bump,
     )]
     pub escrow: Account<'info, Escrow>,
+    pub mint_x: InterfaceAccount<'info, Mint>,
+    pub mint_y: InterfaceAccount<'info, Mint>,
     #[account(
         init,
         payer = maker,

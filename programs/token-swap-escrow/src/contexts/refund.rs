@@ -34,7 +34,7 @@ pub struct Refund<'info> {
 
 impl<'info> Refund<'info> {
     pub fn refund(&mut self) -> Result<()> {
-        // Empty Vault ot maker ATA
+        // Empty Vault to maker ATA
         self.empty_vault()?;
 
         //Close Vault
@@ -42,6 +42,7 @@ impl<'info> Refund<'info> {
     }
 
     pub fn empty_vault(&mut self) -> Result<()> {
+        // Create signer seeds
         let signer_seeds: [&[&[u8]];1] = [
             &[
                 b"escrow", 
@@ -67,6 +68,7 @@ impl<'info> Refund<'info> {
     }
 
     pub fn close_vault(&mut self) -> Result<()> {
+        // Create signer seeds
         let signer_seeds: [&[&[u8]];1] = [
             &[
                 b"escrow", 
@@ -76,16 +78,17 @@ impl<'info> Refund<'info> {
             ]
         ];
 
+        // Create CPI accounts
         let cpi_accounts = CloseAccount {
             account: self.vault.to_account_info(),
             destination: self.maker.to_account_info(),
             authority: self.escrow.to_account_info(),
         };
-
+        // Fetch CPI program
         let cpi_program = self.token_program.to_account_info();
-
+        // Create CPI context
         let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, &signer_seeds);
-
+        // Close vault
         close_account(cpi_ctx)
     }
 }
