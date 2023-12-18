@@ -108,6 +108,25 @@ describe("token-swap-escrow", () => {
     console.log("\nAmount deposited in the vault: ", (await provider.connection.getTokenAccountBalance(vault)).value.uiAmount, " Tokens");
   });
 
+  xit("Refund Escrow", async () => {
+    console.log("\n\nAmount in maker ATA X before refunding escrow: ", (await provider.connection.getTokenAccountBalance(makerAtaX)).value.uiAmount, " Tokens");
+
+    const tx = await program.methods.refund()
+    .accounts({
+      maker: providerWallet.publicKey,
+      mintX,
+      mintY,
+      vault,
+      makerAtaX,
+      escrow,
+      tokenProgram: TOKEN_PROGRAM_ID,
+    })
+    .rpc();
+
+    console.log("\nEscrow Refunded! TxID: ", tx);
+    console.log("\nAmount in maker ATA X after refunding escrow: ", (await provider.connection.getTokenAccountBalance(makerAtaX)).value.uiAmount, " Tokens");
+  });
+
   it("Take Escrow", async () => {
     console.log("\n\nAmount in taker ATA Y before taking escrow: ", (await provider.connection.getTokenAccountBalance(takerAtaY)).value.uiAmount, " Tokens");
 
