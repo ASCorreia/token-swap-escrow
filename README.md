@@ -1,6 +1,6 @@
 # Token Swap Escrow
 
-This anchor program creates an escrow to swap tokens. A maker deposits a certain amount of token X and asks for a certain amount of token Y in return. If you have any question please reach out to @andrescorreia on twitter. 
+This anchor program creates an escrow to swap tokens. A maker deposits a certain amount of token X and asks for a certain amount of token Y in return. If you have any question please reach out to @andrescorreia on X / Twitter. 
 
 ## State:
 

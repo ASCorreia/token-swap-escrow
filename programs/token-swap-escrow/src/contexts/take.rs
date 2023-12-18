@@ -56,6 +56,8 @@ impl<'info> Take<'info> {
 
         // Transfer amount from taker to maker
         self.transfer(self.escrow.amount, false)?;
+
+        // Transfer amount from vault to taker
         self.transfer(self.vault.amount, true)
     }
 
@@ -80,10 +82,13 @@ impl<'info> Take<'info> {
                     authority: self.escrow.to_account_info(),
                     mint: self.mint_x.to_account_info(),
                 };
+
                 // Fetch CPI program
                 let cpi_program = self.token_program.to_account_info();
+
                 // Create CPI context
                 let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, &signer_seeds);
+
                 // Transfer tokens
                 transfer_checked(cpi_ctx, amount, self.mint_x.decimals)
             }
@@ -96,10 +101,13 @@ impl<'info> Take<'info> {
                     authority: self.taker.to_account_info(),
                     mint: self.mint_y.to_account_info(),
                 };
+
                 // Fetch CPI program
                 let cpi_program = self.token_program.to_account_info();
+
                 // Create CPI context
                 let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
+
                 // Transfer tokens
                 transfer_checked(cpi_ctx, amount, self.mint_y.decimals)
             }
@@ -123,10 +131,13 @@ impl<'info> Take<'info> {
             destination: self.maker.to_account_info(),
             authority: self.escrow.to_account_info(),
         };
+
         // Fetch CPI program
         let cpi_program = self.token_program.to_account_info();
+
         // Create CPI context
         let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, &signer_seeds);
+
         // Close vault
         close_account(cpi_ctx)
     }

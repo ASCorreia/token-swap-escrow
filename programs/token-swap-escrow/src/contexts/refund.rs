@@ -59,10 +59,13 @@ impl<'info> Refund<'info> {
             authority: self.escrow.to_account_info(),
             mint: self.mint_x.to_account_info(),
         };
+
         // Fetch CPI program
         let cpi_program = self.token_program.to_account_info();
+
         // Create CPI context
         let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, &signer_seeds);
+
         // Transfer tokens
         transfer_checked(cpi_ctx, self.vault.amount, self.mint_x.decimals)
     }
@@ -84,10 +87,13 @@ impl<'info> Refund<'info> {
             destination: self.maker.to_account_info(),
             authority: self.escrow.to_account_info(),
         };
+
         // Fetch CPI program
         let cpi_program = self.token_program.to_account_info();
+
         // Create CPI context
         let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, &signer_seeds);
+        
         // Close vault
         close_account(cpi_ctx)
     }
