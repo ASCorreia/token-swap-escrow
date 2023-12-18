@@ -22,7 +22,7 @@ pub struct Escrow {
 
 By storing `seed` and `bump`, we can verify that we are actually "accessing" the correct escrow account.
 We store the Pubkey of `mint_x` and `mint_y` to later verify that both the tokens that are being deposited and withdraw are the correct ones.
-The value `amount` is used to store the amount of tokens from `mint_y` requested by out "maker"
+The value `amount` is used to store the amount of tokens from `mint_y` requested by our "maker"
 
 ## Contexts:
 
@@ -30,7 +30,7 @@ The value `amount` is used to store the amount of tokens from `mint_y` requested
 
 The `Make` context is used to initialize the escrow account and to perform the initial deposit. 
 
-We start by initializing our initializing the escrow account based on the maker pubkey and a seed passed as an instruction argument (allowing a maker to have multiple escrows). 
+We start by initializing the escrow account based on the maker pubkey and a seed passed as an instruction argument (allowing a maker to have multiple escrows). 
 
 ```rust
 #[derive(Accounts)]
